@@ -1367,7 +1367,7 @@ async function aiMatchFormFields(extractedText, profileData) {
   }
 
   try {
-    const model = process.env.OPENAI_MODEL || "gpt-5.6-luna";
+    const model = process.env.OPENAI_MODEL || "gpt-4o-mini";
 
     const systemPrompt = `You are Hamara Saathi AI Form Assistant.
 Analyze extracted text from an Indian government application form and map detected form fields to the citizen's profile data.
@@ -2245,7 +2245,7 @@ async function findPdfValue(
 
   if (openai && process.env.OPENAI_API_KEY) {
     try {
-      const model = process.env.OPENAI_MODEL || "gpt-5.6-luna";
+      const model = process.env.OPENAI_MODEL || "gpt-4o-mini";
       const completion = await openai.chat.completions.create({
         model,
         messages: [
@@ -2789,7 +2789,7 @@ app.post("/api/chat", async (req, res) => {
 
     if (openai && process.env.OPENAI_API_KEY) {
       try {
-        const model = process.env.OPENAI_MODEL || "gpt-5.6-luna";
+        const model = process.env.OPENAI_MODEL || "gpt-4o-mini";
 
         const systemPrompt = `You are Hamara Saathi, a helpful, polite, and knowledgeable AI assistant designed to guide Indian citizens regarding government welfare schemes, public documents (Aadhaar, PAN, Voter ID), application procedures, and citizen assistance.
 Respond warmly and accurately in ${language}. Keep answers concise, clear, and easy to understand for everyday citizens.`;

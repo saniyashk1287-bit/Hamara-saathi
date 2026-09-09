@@ -1262,6 +1262,65 @@ function Dashboard({
 
 
       {/* ======================================
+          GOVERNMENT UPDATES
+      ====================================== */}
+
+      <section className="government-updates">
+
+        <div className="updates-heading">
+
+          <p>
+            {text.stayInformed}
+          </p>
+
+          <h2>
+            {text.governmentUpdates}
+          </h2>
+
+          <span>
+            {text.governmentUpdatesDesc}
+          </span>
+
+        </div>
+
+
+        <div className="updates-grid">
+
+          {categories.map((category) => (
+
+            <div
+              className="update-card"
+              key={category.key}
+            >
+
+              <div className="update-icon">
+                {category.icon}
+              </div>
+
+              <h3>
+                {category.title}
+              </h3>
+
+              <p>
+                {category.description}
+              </p>
+
+              <button
+                onClick={() => openCategory(category)}
+              >
+                {text.viewDetails}
+              </button>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      </section>
+
+
+      {/* ======================================
           MAIN SERVICES
           NOTIFICATIONS CARD REMOVED
       ====================================== */}
@@ -1321,65 +1380,6 @@ function Dashboard({
           <button onClick={onTrackApplication}>
             {text.track}
           </button>
-
-        </div>
-
-      </section>
-
-
-      {/* ======================================
-          GOVERNMENT UPDATES
-      ====================================== */}
-
-      <section className="government-updates">
-
-        <div className="updates-heading">
-
-          <p>
-            {text.stayInformed}
-          </p>
-
-          <h2>
-            {text.governmentUpdates}
-          </h2>
-
-          <span>
-            {text.governmentUpdatesDesc}
-          </span>
-
-        </div>
-
-
-        <div className="updates-grid">
-
-          {categories.map((category) => (
-
-            <div
-              className="update-card"
-              key={category.key}
-            >
-
-              <div className="update-icon">
-                {category.icon}
-              </div>
-
-              <h3>
-                {category.title}
-              </h3>
-
-              <p>
-                {category.description}
-              </p>
-
-              <button
-                onClick={() => openCategory(category)}
-              >
-                {text.viewDetails}
-              </button>
-
-            </div>
-
-          ))}
 
         </div>
 
