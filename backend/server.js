@@ -1367,8 +1367,7 @@ async function aiMatchFormFields(extractedText, profileData) {
   }
 
   try {
-    const rawModel = process.env.OPENAI_MODEL || "gpt-4o-mini";
-    const model = rawModel.toLowerCase().includes("luna") ? "gpt-4o-mini" : rawModel;
+    const model = process.env.OPENAI_MODEL || "gpt-5.6-luna";
 
     const systemPrompt = `You are Hamara Saathi AI Form Assistant.
 Analyze extracted text from an Indian government application form and map detected form fields to the citizen's profile data.
@@ -1393,8 +1392,7 @@ Return ONLY valid JSON matching this schema:
         { role: "user", content: userPrompt }
       ],
       response_format: { type: "json_object" },
-      temperature: 0.1,
-      max_tokens: 800
+      max_completion_tokens: 800
     });
 
     const parsed = JSON.parse(completion.choices[0].message.content);
@@ -2247,8 +2245,7 @@ async function findPdfValue(
 
   if (openai && process.env.OPENAI_API_KEY) {
     try {
-      const rawModel = process.env.OPENAI_MODEL || "gpt-4o-mini";
-      const model = rawModel.toLowerCase().includes("luna") ? "gpt-4o-mini" : rawModel;
+      const model = process.env.OPENAI_MODEL || "gpt-5.6-luna";
       const completion = await openai.chat.completions.create({
         model,
         messages: [
@@ -2262,8 +2259,7 @@ async function findPdfValue(
           }
         ],
         response_format: { type: "json_object" },
-        temperature: 0.1,
-        max_tokens: 100
+        max_completion_tokens: 100
       });
       const parsed = JSON.parse(completion.choices[0].message.content);
       if (parsed.profileKey && profileData[parsed.profileKey]) {
@@ -2793,8 +2789,7 @@ app.post("/api/chat", async (req, res) => {
 
     if (openai && process.env.OPENAI_API_KEY) {
       try {
-        const rawModel = process.env.OPENAI_MODEL || "gpt-4o-mini";
-        const model = rawModel.toLowerCase().includes("luna") ? "gpt-4o-mini" : rawModel;
+        const model = process.env.OPENAI_MODEL || "gpt-5.6-luna";
 
         const systemPrompt = `You are Hamara Saathi, a helpful, polite, and knowledgeable AI assistant designed to guide Indian citizens regarding government welfare schemes, public documents (Aadhaar, PAN, Voter ID), application procedures, and citizen assistance.
 Respond warmly and accurately in ${language}. Keep answers concise, clear, and easy to understand for everyday citizens.`;
@@ -2807,8 +2802,7 @@ Respond warmly and accurately in ${language}. Keep answers concise, clear, and e
         const completion = await openai.chat.completions.create({
           model,
           messages: chatMessages,
-          max_tokens: 500,
-          temperature: 0.3
+          max_completion_tokens: 500
         });
 
         const reply = completion.choices[0].message.content;
