@@ -1,0 +1,154 @@
+.track-page {
+min-height: 100vh;
+background: #f5f9fc;
+padding: 40px 8%;
+box-sizing: border-box;
+font-family: Arial, sans-serif;
+}
+
+.track-header {
+max-width: 1000px;
+margin: 0 auto 35px;
+}
+
+.track-back-button {
+background: transparent;
+border: none;
+color: #2b6cb0;
+font-size: 15px;
+font-weight: 600;
+cursor: pointer;
+padding: 0;
+margin-bottom: 25px;
+}
+
+.track-back-button:hover {
+text-decoration: underline;
+}
+
+.track-header h1 {
+margin: 0 0 10px;
+font-size: 32px;
+color: #1f2937;
+}
+
+.track-header p {
+margin: 0;
+color: #6b7280;
+font-size: 16px;
+}
+
+.applications-container {
+max-width: 1000px;
+margin: auto;
+display: flex;
+flex-direction: column;
+gap: 20px;
+}
+
+.application-card {
+background: #ffffff;
+border: 1px solid #e2e8f0;
+border-radius: 16px;
+padding: 25px;
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
+}
+
+.application-top {
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+gap: 20px;
+border-bottom: 1px solid #edf2f7;
+padding-bottom: 20px;
+}
+
+.application-label {
+color: #718096;
+font-size: 14px;
+}
+
+.application-top h2 {
+margin: 6px 0 0;
+color: #1f2937;
+font-size: 22px;
+}
+
+.status-badge {
+padding: 8px 15px;
+border-radius: 20px;
+font-size: 13px;
+font-weight: 600;
+white-space: nowrap;
+}
+
+.status-badge.submitted {
+background: #e0f2fe;
+color: #0369a1;
+}
+
+.status-badge.under-review {
+background: #fef3c7;
+color: #b45309;
+}
+
+.status-badge.approved {
+background: #dcfce7;
+color: #15803d;
+}
+
+.status-badge.rejected {
+background: #fee2e2;
+color: #b91c1c;
+}
+
+.application-details {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 20px;
+padding-top: 20px;
+}
+
+.detail-item {
+display: flex;
+flex-direction: column;
+gap: 7px;
+}
+
+.detail-item span {
+color: #718096;
+font-size: 13px;
+}
+
+.detail-item strong {
+color: #2d3748;
+font-size: 15px;
+}
+
+.no-applications {
+background: #ffffff;
+padding: 50px;
+text-align: center;
+border-radius: 16px;
+color: #718096;
+}
+
+@media (max-width: 700px) {
+
+.track-page {
+padding: 25px 20px;
+}
+
+.track-header h1 {
+font-size: 27px;
+}
+
+.application-top {
+flex-direction: column;
+}
+
+.application-details {
+grid-template-columns: 1fr;
+}
+
+}

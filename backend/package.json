@@ -1,0 +1,24 @@
+{
+  "name": "hamara-saathi-backend",
+  "version": "1.0.0",
+  "description": "Backend for Hamara Saathi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^1.0.8",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "multer": "^2.3.0",
+    "mysql2": "^3.11.5",
+    "openai": "^7.10.0",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.3.289",
+    "sharp": "^0.35.4",
+    "tesseract.js": "^7.0.0"
+  }
+}

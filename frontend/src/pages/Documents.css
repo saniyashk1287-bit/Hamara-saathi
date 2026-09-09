@@ -1,0 +1,322 @@
+/* =========================================
+   DOCUMENTS PAGE
+========================================= */
+
+.documents-page {
+  min-height: 100vh;
+  background: #f4f9fd;
+  padding-bottom: 50px;
+  font-family: Arial, sans-serif;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.documents-header {
+  background: white;
+  padding: 18px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #dbe8f3;
+}
+
+.documents-header h2 {
+  margin: 0;
+  color: #174a73;
+  font-size: 25px;
+}
+
+.documents-header p {
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: #6d8aa3;
+  letter-spacing: 1px;
+}
+
+.documents-back-top {
+  border: none;
+  background: #e8f3fb;
+  color: #174a73;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+
+/* =========================================
+   INTRO
+========================================= */
+
+.documents-intro {
+  text-align: center;
+  padding: 60px 20px 35px;
+}
+
+.documents-intro p {
+  color: #4386b5;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.documents-intro h1 {
+  color: #173f5f;
+  font-size: 34px;
+  margin: 10px 0;
+}
+
+.documents-intro span {
+  color: #6a7f91;
+  font-size: 16px;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.documents-status {
+  width: 85%;
+  max-width: 900px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.status-number {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  text-align: center;
+  border: 1px solid #dce9f3;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.status-number h2 {
+  margin: 0;
+  color: #1f75a9;
+  font-size: 30px;
+}
+
+.status-number p {
+  margin: 8px 0 0;
+  color: #667b8e;
+}
+
+
+/* =========================================
+   DOCUMENT CONTAINER
+========================================= */
+
+.documents-container {
+  width: 85%;
+  max-width: 1100px;
+  margin: 40px auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+
+/* =========================================
+   DOCUMENT CARD
+========================================= */
+
+.document-card {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  border: 1px solid #dce8f1;
+  text-align: center;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.04);
+}
+
+.document-icon {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.document-card h3 {
+  color: #234f70;
+  margin-bottom: 15px;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.document-uploaded {
+  background: #e9f8ef;
+  color: #27834b;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.document-uploaded span {
+  font-weight: bold;
+}
+
+.document-uploaded p {
+  font-size: 12px;
+  margin: 6px 0 0;
+  word-break: break-word;
+}
+
+.document-pending {
+  background: #fff5df;
+  color: #a86c00;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+
+/* =========================================
+   IMAGE PREVIEW
+========================================= */
+
+.document-preview {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid #dce8f1;
+  margin-bottom: 15px;
+}
+
+
+/* =========================================
+   UPLOAD BUTTON
+========================================= */
+
+.document-upload-button {
+  display: block;
+  background: #247bb3;
+  color: white;
+  padding: 11px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.document-upload-button:hover {
+  background: #196b9e;
+}
+
+.document-upload-button input {
+  display: none;
+}
+
+
+/* =========================================
+   REMOVE BUTTON
+========================================= */
+
+.document-remove-button {
+  width: 100%;
+  margin-top: 10px;
+  border: none;
+  background: #fff0f0;
+  color: #c64040;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+
+/* =========================================
+   INFORMATION
+========================================= */
+
+.documents-info {
+  width: 85%;
+  max-width: 900px;
+  margin: 20px auto;
+  background: #eaf5fc;
+  padding: 22px;
+  border-radius: 14px;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.documents-info span {
+  font-size: 28px;
+}
+
+.documents-info h3 {
+  margin: 0 0 8px;
+  color: #235375;
+}
+
+.documents-info p {
+  margin: 0;
+  color: #61778a;
+  line-height: 1.6;
+}
+
+
+/* =========================================
+   BOTTOM BUTTON
+========================================= */
+
+.documents-bottom {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.documents-back-button {
+  border: none;
+  background: #e7f2fa;
+  color: #245879;
+  padding: 13px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+  .documents-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .documents-header {
+    padding: 15px 5%;
+  }
+
+  .documents-intro h1 {
+    font-size: 27px;
+  }
+
+  .documents-status {
+    grid-template-columns: 1fr;
+  }
+
+  .documents-container {
+    grid-template-columns: 1fr;
+    width: 90%;
+  }
+
+  .documents-info {
+    width: 90%;
+  }
+
+}

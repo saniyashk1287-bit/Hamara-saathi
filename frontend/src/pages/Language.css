@@ -1,0 +1,659 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* =========================
+   MAIN PAGE
+========================= */
+
+.language-page {
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 105px 20px 30px;
+
+  position: relative;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      #dff3ff 0%,
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 90% 90%,
+      #eee6ff 0%,
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      #f7fbff,
+      #f8f6ff
+    );
+}
+
+
+/* =========================
+   BACKGROUND CIRCLES
+========================= */
+
+.background-circle {
+  position: absolute;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  z-index: 0;
+}
+
+
+.circle-one {
+  width: 220px;
+  height: 220px;
+
+  top: -80px;
+  left: -70px;
+
+  background: rgba(65, 166, 230, 0.12);
+}
+
+
+.circle-two {
+  width: 280px;
+  height: 280px;
+
+  right: -100px;
+  bottom: -100px;
+
+  background: rgba(125, 101, 220, 0.12);
+}
+
+
+.circle-three {
+  width: 90px;
+  height: 90px;
+
+  top: 20%;
+  right: 13%;
+
+  background: rgba(52, 152, 219, 0.08);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.language-header {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 82px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 45px;
+
+  background: rgba(255, 255, 255, 0.97);
+
+  border-bottom: 1px solid #e3eaf2;
+
+  box-shadow:
+    0 3px 15px rgba(40, 65, 100, 0.06);
+
+  backdrop-filter: blur(14px);
+
+  z-index: 100;
+}
+
+
+/* =========================
+   HEADER LOGO
+========================= */
+
+.header-logo {
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+
+.header-logo img {
+  width: 150px;
+  height: 72px;
+
+  display: block;
+
+  object-fit: contain;
+  object-position: center;
+
+  filter:
+    drop-shadow(
+      0 3px 6px rgba(40, 70, 120, 0.10)
+    );
+
+  transition:
+    transform 0.25s ease;
+}
+
+
+.header-logo img:hover {
+  transform: scale(1.03);
+}
+
+
+/* =========================
+   HEADER DIVIDER
+========================= */
+
+.header-divider {
+  width: 1px;
+  height: 34px;
+
+  margin-left: 24px;
+  margin-right: 24px;
+
+  background: #dfe5ec;
+}
+
+
+/* =========================
+   HEADER TEXT
+========================= */
+
+.header-text {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  white-space: nowrap;
+}
+
+
+.header-text span:first-child {
+  color: #66748a;
+
+  font-size: 14px;
+
+  font-weight: 650;
+
+  letter-spacing: 1.2px;
+}
+
+
+.header-hand {
+  font-size: 16px;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.language-container {
+  width: 100%;
+  max-width: 540px;
+
+  text-align: center;
+
+  position: relative;
+
+  z-index: 2;
+}
+
+
+/* =========================
+   LANGUAGE CARD
+========================= */
+
+.language-card {
+  width: 100%;
+
+  background: rgba(255, 255, 255, 0.97);
+
+  padding: 35px;
+
+  border-radius: 26px;
+
+  border: 1px solid rgba(255, 255, 255, 0.95);
+
+  box-shadow:
+    0 25px 60px rgba(40, 65, 100, 0.12),
+    0 5px 20px rgba(40, 65, 100, 0.05);
+
+  backdrop-filter: blur(12px);
+}
+
+
+/* =========================
+   GLOBE ICON
+========================= */
+
+.language-icon {
+  width: 70px;
+  height: 70px;
+
+  margin: 0 auto 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e5f5ff,
+      #eee9ff
+    );
+
+  border: 1px solid #dceafa;
+
+  font-size: 35px;
+
+  box-shadow:
+    0 10px 25px rgba(65, 110, 160, 0.10);
+
+  transition:
+    transform 0.3s ease;
+}
+
+
+.language-icon:hover {
+  transform: rotate(8deg) scale(1.05);
+}
+
+
+/* =========================
+   HEADING
+========================= */
+
+.language-card h1 {
+  color: #172033;
+
+  font-size: 27px;
+
+  font-weight: 800;
+
+  margin-bottom: 10px;
+}
+
+
+.language-description {
+  color: #6c778a;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+
+  margin-bottom: 25px;
+}
+
+
+/* =========================
+   LANGUAGE GRID
+========================= */
+
+.language-options {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 14px;
+}
+
+
+/* =========================
+   LANGUAGE BUTTON
+========================= */
+
+.language-button {
+  min-height: 82px;
+  width: 100%;
+
+  padding: 13px;
+
+  display: flex;
+  align-items: center;
+
+  text-align: left;
+
+  gap: 11px;
+
+  background: white;
+
+  border: 1px solid #e3e8f0;
+
+  border-radius: 16px;
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+
+.language-button:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 12px 25px rgba(50, 75, 110, 0.13);
+
+  border-color: #8aa9e8;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #f8fbff
+    );
+}
+
+
+.language-button:active {
+  transform: translateY(-1px);
+}
+
+
+/* =========================
+   LANGUAGE SYMBOL
+========================= */
+
+.language-symbol {
+  width: 45px;
+  height: 45px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  font-size: 20px;
+
+  font-weight: 800;
+}
+
+
+/* English */
+
+.language-button.english .language-symbol {
+  background: #eaf5ff;
+  color: #1769aa;
+}
+
+
+/* Hindi */
+
+.language-button.hindi .language-symbol {
+  background: #fff1e8;
+  color: #d86b2d;
+}
+
+
+/* Marathi */
+
+.language-button.marathi .language-symbol {
+  background: #f1ebff;
+  color: #7657bd;
+}
+
+
+/* Telugu */
+
+.language-button.telugu .language-symbol {
+  background: #e8f8f1;
+  color: #269268;
+}
+
+
+/* =========================
+   LANGUAGE TEXT
+========================= */
+
+.language-text {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+
+  flex: 1;
+}
+
+
+.language-text strong {
+  color: #202a3d;
+
+  font-size: 16px;
+
+  font-weight: 750;
+}
+
+
+.language-text span {
+  color: #8992a2;
+
+  font-size: 10px;
+
+  font-weight: 500;
+}
+
+
+/* =========================
+   ARROW
+========================= */
+
+.language-arrow {
+  color: #9aa4b4;
+
+  font-size: 20px;
+
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
+}
+
+
+.language-button:hover .language-arrow {
+  color: #1769aa;
+
+  transform: translateX(5px);
+}
+
+
+/* =========================
+   DIVIDER
+========================= */
+
+.language-divider {
+  width: 100%;
+  height: 1px;
+
+  background: #edf0f4;
+
+  margin: 24px 0 17px;
+}
+
+
+/* =========================
+   NOTE
+========================= */
+
+.language-note {
+  color: #8992a2;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================
+   BOTTOM TEXT
+========================= */
+
+.bottom-text {
+  margin-top: 17px;
+
+  color: #9aa4b4;
+
+  font-size: 11px;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================
+   TABLET / MOBILE
+========================= */
+
+@media (max-width: 550px) {
+
+  .language-header {
+    height: 68px;
+
+    padding: 0 20px;
+  }
+
+
+  .header-logo img {
+    width: 115px;
+    height: 60px;
+  }
+
+
+  .header-divider {
+    height: 28px;
+
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+
+
+  .header-text {
+    gap: 5px;
+  }
+
+
+  .header-text span:first-child {
+    font-size: 10px;
+
+    letter-spacing: 0.7px;
+  }
+
+
+  .header-hand {
+    font-size: 13px;
+  }
+
+
+  .language-page {
+    padding: 90px 15px 20px;
+  }
+
+
+  .language-card {
+    padding: 28px 20px;
+
+    border-radius: 22px;
+  }
+
+
+  .language-icon {
+    width: 65px;
+    height: 65px;
+
+    font-size: 31px;
+  }
+
+
+  .language-card h1 {
+    font-size: 23px;
+  }
+
+
+  .language-options {
+    grid-template-columns: 1fr;
+  }
+
+
+  .language-button {
+    min-height: 76px;
+  }
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 380px) {
+
+  .language-header {
+    padding: 0 15px;
+  }
+
+
+  .header-logo img {
+    width: 105px;
+    height: 55px;
+  }
+
+
+  .header-divider {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+
+  .header-text span:first-child {
+    font-size: 9px;
+  }
+
+
+  .header-hand {
+    font-size: 12px;
+  }
+
+
+  .language-card {
+    padding: 24px 16px;
+  }
+
+
+  .language-card h1 {
+    font-size: 21px;
+  }
+
+
+  .language-description {
+    font-size: 13px;
+  }
+}

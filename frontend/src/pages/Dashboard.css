@@ -1,0 +1,654 @@
+* {
+  box-sizing: border-box;
+}
+
+.dashboard {
+  min-height: 100vh;
+  background: #f5f9fd;
+  color: #243b4d;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* ================= HEADER ================= */
+
+.dashboard-navbar {
+  width: 100%;
+  min-height: 82px;
+  padding: 10px 6%;
+
+  background: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom: 1px solid #dce8f2;
+  box-shadow: 0 3px 15px rgba(35, 92, 130, 0.06);
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+
+/* ================= BRAND ================= */
+
+.dashboard-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dashboard-logo-box {
+  width: 60px;
+  height: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #eef7ff;
+  border: 1px solid #d3e6f4;
+  border-radius: 15px;
+
+  overflow: hidden;
+
+  box-shadow: 0 4px 12px rgba(30, 105, 155, 0.08);
+}
+
+.dashboard-logo {
+  width: 52px;
+  height: 52px;
+
+  object-fit: contain;
+}
+
+.dashboard-brand-text h2 {
+  margin: 0;
+
+  color: #1769aa;
+
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.dashboard-brand-text span {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #7890a0;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 1.7px;
+}
+
+
+/* ================= NAVIGATION ================= */
+
+.dashboard-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-item {
+  padding: 10px 14px;
+
+  border-radius: 9px;
+
+  color: #536a7b;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.nav-item:hover {
+  color: #1769aa;
+  background: #eef7fd;
+}
+
+.nav-item.active {
+  color: #1769aa;
+  background: #eaf4fc;
+  font-weight: 700;
+}
+
+
+/* ================= WELCOME ================= */
+
+.welcome {
+  padding: 68px 7% 55px;
+
+  background: linear-gradient(
+    135deg,
+    #e8f4fc,
+    #f8fbfe
+  );
+
+  border-bottom: 1px solid #dce9f3;
+}
+
+.welcome .tagline {
+  margin: 0 0 12px;
+
+  color: #2878b8;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.welcome h1 {
+  margin: 0;
+
+  color: #183b56;
+
+  font-size: 42px;
+  line-height: 1.2;
+}
+
+.welcome p:last-child {
+  margin-top: 15px;
+
+  color: #647988;
+
+  font-size: 18px;
+}
+
+
+/* ================= SERVICES ================= */
+
+.dashboard-services {
+  padding: 50px 7%;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 22px;
+
+  background: #f5f9fd;
+}
+
+.service-card {
+  background: #ffffff;
+
+  padding: 28px 24px;
+
+  border: 1px solid #dce8f2;
+  border-radius: 17px;
+
+  box-shadow: 0 5px 18px rgba(39, 95, 135, 0.06);
+
+  transition: 0.25s;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+
+  border-color: #b8d5e9;
+
+  box-shadow: 0 12px 28px rgba(39, 95, 135, 0.12);
+}
+
+.service-icon {
+  width: 56px;
+  height: 56px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 18px;
+
+  background: #e9f4fc;
+  border-radius: 14px;
+
+  font-size: 27px;
+}
+
+.service-card h2 {
+  margin: 0 0 10px;
+
+  color: #24465e;
+
+  font-size: 19px;
+}
+
+.service-card p {
+  min-height: 70px;
+
+  margin: 0 0 20px;
+
+  color: #6b7f8e;
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.service-card button {
+  width: 100%;
+
+  padding: 12px 15px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #2477b9;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.service-card button:hover {
+  background: #185e95;
+}
+
+
+/* ================= RECENT ================= */
+
+.recent {
+  padding: 60px 7%;
+
+  background: #ffffff;
+}
+
+.recent > h2 {
+  margin: 0 0 25px;
+
+  color: #183b56;
+
+  font-size: 30px;
+}
+
+.application {
+  width: 100%;
+
+  margin-bottom: 15px;
+  padding: 20px 24px;
+
+  background: #f8fbfe;
+
+  border: 1px solid #dce8f2;
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.application h3 {
+  margin: 0 0 6px;
+
+  color: #294a60;
+
+  font-size: 17px;
+}
+
+.application p {
+  margin: 0;
+
+  color: #7a8d9b;
+
+  font-size: 13px;
+}
+
+.status {
+  padding: 7px 14px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.status.progress {
+  background: #fff4d8;
+  color: #997221;
+}
+
+.status.completed {
+  background: #e7f6ed;
+  color: #287548;
+}
+
+
+/* ================= GOVERNMENT UPDATES ================= */
+
+.government-updates {
+  padding: 70px 7%;
+
+  background: #f5f9fd;
+}
+
+.updates-heading {
+  text-align: center;
+
+  margin-bottom: 42px;
+}
+
+.updates-heading p {
+  margin: 0 0 8px;
+
+  color: #2878b8;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.updates-heading h2 {
+  margin: 0 0 12px;
+
+  color: #183b56;
+
+  font-size: 34px;
+}
+
+.updates-heading span {
+  color: #6b7f8e;
+
+  font-size: 15px;
+}
+
+.updates-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 20px;
+}
+
+.update-card {
+  padding: 25px;
+
+  background: #ffffff;
+
+  border: 1px solid #dce8f2;
+  border-radius: 16px;
+
+  transition: 0.25s;
+}
+
+.update-card:hover {
+  transform: translateY(-5px);
+
+  border-color: #b9d7eb;
+
+  box-shadow: 0 10px 25px rgba(40, 100, 150, 0.09);
+}
+
+.update-icon {
+  width: 51px;
+  height: 51px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 17px;
+
+  background: #e9f4fc;
+  border-radius: 13px;
+
+  font-size: 25px;
+}
+
+.update-card h3 {
+  margin: 0 0 10px;
+
+  color: #294a60;
+
+  font-size: 17px;
+}
+
+.update-card p {
+  min-height: 72px;
+
+  margin: 0 0 18px;
+
+  color: #6c8090;
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.update-card button {
+  padding: 9px 15px;
+
+  border: 1px solid #5c91bb;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #2672a9;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.update-card button:hover {
+  background: #2477b9;
+  color: #ffffff;
+}
+
+
+/* ================= AI HELP ================= */
+
+.ai-help-section {
+  margin: 45px 7% 65px;
+  padding: 30px 35px;
+
+  background: linear-gradient(
+    135deg,
+    #eaf4fc,
+    #f6faff
+  );
+
+  border: 1px solid #d2e4f1;
+  border-radius: 18px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 22px;
+}
+
+.ai-help-icon {
+  min-width: 65px;
+  height: 65px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+  border-radius: 16px;
+
+  font-size: 31px;
+}
+
+.ai-help-section p {
+  margin: 0 0 5px;
+
+  color: #2878b8;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+.ai-help-section h2 {
+  margin: 0 0 7px;
+
+  color: #24465e;
+
+  font-size: 22px;
+}
+
+.ai-help-section span {
+  color: #6c8090;
+
+  font-size: 14px;
+}
+
+.ai-help-section button {
+  margin-left: auto;
+
+  padding: 12px 20px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #2477b9;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.ai-help-section button:hover {
+  background: #185e95;
+}
+
+
+/* ================= FOOTER ================= */
+
+.dashboard-footer {
+  padding: 30px 7%;
+
+  background: #183b56;
+
+  color: #dceaf4;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-size: 13px;
+}
+
+.dashboard-footer strong {
+  color: #ffffff;
+
+  font-size: 17px;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1100px) {
+
+  .dashboard-services {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .updates-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .dashboard-navbar {
+    padding: 15px 5%;
+
+    flex-direction: column;
+
+    gap: 15px;
+  }
+
+  .dashboard-brand {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .dashboard-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .welcome {
+    padding: 45px 5% 35px;
+  }
+
+  .welcome h1 {
+    font-size: 31px;
+  }
+
+  .dashboard-services {
+    padding: 35px 5%;
+
+    grid-template-columns: 1fr;
+  }
+
+  .government-updates {
+    padding: 50px 5%;
+  }
+
+  .updates-heading h2 {
+    font-size: 28px;
+  }
+
+  .updates-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .recent {
+    padding: 45px 5%;
+  }
+
+  .application {
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+  .ai-help-section {
+    margin: 10px 5% 45px;
+    padding: 25px;
+
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ai-help-section button {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .dashboard-footer {
+    padding: 25px 5%;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    text-align: center;
+  }
+
+}

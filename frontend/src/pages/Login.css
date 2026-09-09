@@ -1,0 +1,578 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.login-page {
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding: 35px 20px 30px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f4faff 0%,
+      #f8f6ff 100%
+    );
+
+  overflow-x: hidden;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.login-container {
+  width: 100%;
+  max-width: 430px;
+
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+
+/* =========================
+   BRAND SECTION
+========================= */
+
+.brand-section {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  margin-bottom: 22px;
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
+.login-logo {
+  width: 135px;
+  height: auto;
+
+  display: block;
+
+  object-fit: contain;
+
+  margin-bottom: 5px;
+
+  filter:
+    drop-shadow(
+      0 4px 8px rgba(30, 80, 130, 0.12)
+    );
+
+  transition: transform 0.25s ease;
+}
+
+
+/* Small hover effect */
+
+.login-logo:hover {
+  transform: scale(1.03);
+}
+
+
+/* =========================
+   HAMARA SAATHI NAME
+========================= */
+
+.brand-section h1 {
+  margin: 0;
+
+  font-family:
+    "Trebuchet MS",
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  font-size: 31px;
+
+  font-weight: 800;
+
+  line-height: 1.2;
+
+  letter-spacing: -0.5px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #1769aa,
+      #315db8,
+      #7654c7
+    );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  background-clip: text;
+}
+
+
+/* =========================
+   TAGLINE
+========================= */
+
+.tagline {
+  margin-top: 6px;
+
+  color: #68778d;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  line-height: 1.4;
+}
+
+
+/* =========================
+   LOGIN CARD
+========================= */
+
+.login-card {
+  width: 100%;
+
+  padding: 32px;
+
+  background: #ffffff;
+
+  border: 1px solid #e1e8f0;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 15px 40px rgba(30, 65, 100, 0.10),
+    0 3px 12px rgba(30, 65, 100, 0.04);
+
+  text-align: left;
+}
+
+
+/* =========================
+   WELCOME ICON
+========================= */
+
+.welcome-icon {
+  width: 50px;
+  height: 50px;
+
+  margin: 0 auto 14px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e9f6ff,
+      #f0ebff
+    );
+
+  font-size: 25px;
+}
+
+
+/* =========================
+   HEADING
+========================= */
+
+.login-card h2 {
+  text-align: center;
+
+  margin: 0 0 7px;
+
+  color: #172033;
+
+  font-family:
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  font-size: 26px;
+
+  font-weight: 800;
+
+  line-height: 1.3;
+}
+
+
+/* =========================
+   SUBTITLE
+========================= */
+
+.login-subtitle {
+  text-align: center;
+
+  color: #687386;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+
+  margin-bottom: 24px;
+}
+
+
+/* =========================
+   INPUT GROUP
+========================= */
+
+.input-group {
+  width: 100%;
+
+  margin-bottom: 17px;
+}
+
+
+/* =========================
+   LABEL
+========================= */
+
+.input-group label {
+  display: block;
+
+  color: #27364d;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  margin-bottom: 7px;
+}
+
+
+/* =========================
+   INPUT
+========================= */
+
+.input-group input {
+  width: 100%;
+
+  height: 47px;
+
+  padding: 0 14px;
+
+  border: 1px solid #d8e1eb;
+
+  border-radius: 9px;
+
+  background: #fbfcfe;
+
+  color: #202a3d;
+
+  font-family:
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  font-size: 13px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+
+/* Placeholder */
+
+.input-group input::placeholder {
+  color: #9aa6b7;
+}
+
+
+/* Focus */
+
+.input-group input:focus {
+  border-color: #1769aa;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 3px rgba(23, 105, 170, 0.10);
+}
+
+
+/* =========================
+   LOGIN BUTTON
+========================= */
+
+.login-button {
+  width: 100%;
+
+  height: 48px;
+
+  margin-top: 6px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1769aa,
+      #315db8
+    );
+
+  color: #ffffff;
+
+  font-family:
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 7px 18px rgba(23, 105, 170, 0.20);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* Login hover */
+
+.login-button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 22px rgba(23, 105, 170, 0.25);
+}
+
+
+/* Login click */
+
+.login-button:active {
+  transform: translateY(0);
+}
+
+
+/* =========================
+   REGISTER QUESTION
+========================= */
+
+.register-question {
+  text-align: center;
+
+  color: #687386;
+
+  font-size: 13px;
+
+  margin: 21px 0 10px;
+}
+
+
+/* =========================
+   REGISTER BUTTON
+========================= */
+
+.register-button {
+  width: 100%;
+
+  height: 44px;
+
+  border: 1px solid #1769aa;
+
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #1769aa;
+
+  font-family:
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+/* Register hover */
+
+.register-button:hover {
+  background: #eef7ff;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.login-footer {
+  margin-top: 17px;
+
+  color: #9aa4b4;
+
+  font-size: 10px;
+
+  letter-spacing: 1px;
+
+  text-align: center;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 600px) {
+
+  .login-page {
+    padding: 30px 16px;
+  }
+
+  .login-container {
+    max-width: 420px;
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 500px) {
+
+  .login-page {
+    padding: 25px 15px 25px;
+  }
+
+
+  .login-logo {
+    width: 120px;
+  }
+
+
+  .brand-section {
+    margin-bottom: 18px;
+  }
+
+
+  .brand-section h1 {
+    font-size: 27px;
+  }
+
+
+  .tagline {
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+  }
+
+
+  .login-card {
+    padding: 27px 21px;
+
+    border-radius: 18px;
+  }
+
+
+  .login-card h2 {
+    font-size: 23px;
+  }
+
+
+  .login-subtitle {
+    font-size: 12px;
+  }
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 360px) {
+
+  .login-page {
+    padding: 20px 12px;
+  }
+
+
+  .login-logo {
+    width: 105px;
+  }
+
+
+  .brand-section h1 {
+    font-size: 24px;
+  }
+
+
+  .tagline {
+    font-size: 8px;
+
+    letter-spacing: 1.2px;
+  }
+
+
+  .login-card {
+    padding: 23px 17px;
+  }
+
+
+  .login-card h2 {
+    font-size: 21px;
+  }
+
+
+  .input-group input {
+    height: 45px;
+  }
+
+
+  .login-button {
+    height: 46px;
+  }
+
+}
