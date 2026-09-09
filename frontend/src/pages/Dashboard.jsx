@@ -827,18 +827,6 @@ function Dashboard({
 
   const categories = [
     {
-      key: "importantNotification",
-      icon: "🔔",
-      title: text.importantNotification,
-      description: text.importantNotificationDesc
-    },
-    {
-      key: "documentReminder",
-      icon: "📄",
-      title: text.documentReminder,
-      description: text.documentReminderDesc
-    },
-    {
       key: "governmentSchemes",
       icon: "🏛️",
       title: text.governmentSchemes,
