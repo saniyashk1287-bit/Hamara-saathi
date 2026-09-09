@@ -9,7 +9,12 @@ const sharp = require("sharp");
 const { PDFDocument, StandardFonts, rgb } = require("pdf-lib");
 const { createCanvas } = require("@napi-rs/canvas");
 const { createWorker } = require("tesseract.js");
+const { OpenAI } = require("openai");
 require("dotenv").config();
+
+const openai = process.env.OPENAI_API_KEY
+  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  : null;
 
 const app = express();
 
@@ -1273,14 +1278,16 @@ function calculatePlacement(
   width,
   height
 ) {
+  const x0 = match?.first?.x0 ?? match?.first?.bbox?.x0 ?? 50;
+  const y0 = match?.first?.y0 ?? match?.first?.bbox?.y0 ?? 50;
+  const x1 = match?.last?.x1 ?? match?.last?.bbox?.x1 ?? (x0 + 100);
+  const y1 = match?.last?.y1 ?? match?.last?.bbox?.y1 ?? (y0 + 20);
 
   const labelHeight =
     Math.max(
       12,
-      match.last.y1 -
-      match.first.y0
+      y1 - y0
     );
-
 
   let fontSize =
     Math.max(
@@ -1293,42 +1300,31 @@ function calculatePlacement(
       )
     );
 
-
   const estimatedWidth =
     String(value).length *
     fontSize *
     0.52;
 
-
-  let x =
-    match.last.x1 + 12;
-
-  let yTop =
-    match.first.y0;
-
+  let x = x1 + 12;
+  let yTop = y0;
 
   if (
     x + estimatedWidth >
     width - 10
   ) {
-
-    x =
-      match.first.x0;
-
+    x = x0;
     yTop =
-      match.last.y1 +
+      y1 +
       Math.max(
         7,
         labelHeight * 0.35
       );
   }
 
-
   if (
     x + estimatedWidth >
     width - 5
   ) {
-
     fontSize =
       Math.max(
         8,
@@ -1343,18 +1339,15 @@ function calculatePlacement(
       );
   }
 
-
   if (
     yTop + fontSize >
     height - 5
   ) {
-
     yTop =
       height -
       fontSize -
       5;
   }
-
 
   return {
     x,
@@ -1364,32 +1357,140 @@ function calculatePlacement(
 }
 
 
-function createOverlays(
+// ======================================================
+// AI-POWERED FORM FIELD MATCHING (OPENAI)
+// ======================================================
+
+async function aiMatchFormFields(extractedText, profileData) {
+  if (!openai || !process.env.OPENAI_API_KEY || !extractedText || !extractedText.trim()) {
+    return null;
+  }
+
+  try {
+    const rawModel = process.env.OPENAI_MODEL || "gpt-4o-mini";
+    const model = rawModel.toLowerCase().includes("luna") ? "gpt-4o-mini" : rawModel;
+
+    const systemPrompt = `You are Hamara Saathi AI Form Assistant.
+Analyze extracted text from an Indian government application form and map detected form fields to the citizen's profile data.
+Return ONLY valid JSON matching this schema:
+{
+  "mappings": [
+    {
+      "formLabel": "exact label as written on the form, e.g. Name of Applicant or DOB or Address",
+      "profileKey": "one of: fullName, dateOfBirth, phone, email, gender, age, education, occupation, category, address, city, state, pincode, aadhaar, pan, voterId",
+      "confidence": 0.95
+    }
+  ],
+  "unmatchedFields": ["list of other detected form field names not available in citizen profile"]
+}`;
+
+    const userPrompt = `Form text:\n${extractedText.slice(0, 3500)}\n\nCitizen profile data:\n${JSON.stringify(profileData, null, 2)}`;
+
+    const completion = await openai.chat.completions.create({
+      model,
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt }
+      ],
+      response_format: { type: "json_object" },
+      temperature: 0.1,
+      max_tokens: 800
+    });
+
+    const parsed = JSON.parse(completion.choices[0].message.content);
+    return parsed;
+  } catch (err) {
+    console.warn("OpenAI form matching note (using local OCR matching):", err.message);
+    return null;
+  }
+}
+
+function findLabelInWords(words, labelText, profileKey) {
+  if (!words || !words.length || !labelText) return null;
+  const parts = labelText.split(/\s+/).map(normalizeText).filter(Boolean);
+  if (!parts.length) return null;
+
+  const usable = (words || [])
+    .filter(w => w?.text && w?.bbox)
+    .map(w => ({
+      text: w.text.trim(),
+      norm: normalizeText(w.text),
+      x0: w.bbox.x0,
+      y0: w.bbox.y0,
+      x1: w.bbox.x1,
+      y1: w.bbox.y1,
+      cy: (w.bbox.y0 + w.bbox.y1) / 2,
+      confidence: Number(w.confidence || 0)
+    }));
+
+  for (let i = 0; i < usable.length; i++) {
+    const found = [];
+    let cursor = i;
+    for (const part of parts) {
+      let index = -1;
+      for (let j = cursor; j < Math.min(cursor + 4, usable.length); j++) {
+        if (Math.abs(usable[j].cy - usable[i].cy) > 40) continue;
+        if (usable[j].norm === part || usable[j].norm.includes(part) || part.includes(usable[j].norm)) {
+          index = j;
+          break;
+        }
+      }
+      if (index < 0) break;
+      found.push(usable[index]);
+      cursor = index + 1;
+    }
+
+    if (found.length === parts.length) {
+      return {
+        key: profileKey,
+        first: found[0],
+        last: found[found.length - 1],
+        score: found.reduce((sum, w) => sum + w.confidence, 0) / found.length
+      };
+    }
+  }
+
+  return null;
+}
+
+async function createOverlays(
   ocrData,
   profileData,
   width,
   height
 ) {
-
   const matches =
     findLabelMatches(
       ocrData.words
     );
 
+  // AI Semantic Enrichment
+  if (openai && ocrData.text) {
+    try {
+      const aiResult = await aiMatchFormFields(ocrData.text, profileData);
+      if (aiResult && Array.isArray(aiResult.mappings)) {
+        for (const item of aiResult.mappings) {
+          if (!matches.some(m => m.key === item.profileKey) && item.formLabel) {
+            const aiFound = findLabelInWords(ocrData.words, item.formLabel, item.profileKey);
+            if (aiFound) {
+              matches.push(aiFound);
+            }
+          }
+        }
+      }
+    } catch (e) {
+      // Fallback cleanly to matches
+    }
+  }
 
   const overlays = [];
-
   const used = new Set();
 
-
   for (const match of matches) {
-
     const value =
       profileData[match.key];
 
-
     if (!value) continue;
-
 
     const pos =
       calculatePlacement(
@@ -1399,72 +1500,112 @@ function createOverlays(
         height
       );
 
-
     const key =
       `${match.key}-${Math.round(
-        match.first.x0
+        match?.first?.x0 ?? match?.first?.bbox?.x0 ?? 0
       )}-${Math.round(
-        match.first.y0
+        match?.first?.y0 ?? match?.first?.bbox?.y0 ?? 0
       )}`;
-
 
     if (used.has(key)) continue;
 
-
     used.add(key);
 
-
     overlays.push({
-
       key:
         match.key,
-
       value:
         String(value),
-
       x:
         pos.x,
-
       yTop:
         pos.yTop,
-
       fontSize:
         pos.fontSize
     });
   }
 
-
   return overlays;
 }
 
 
-// ======================================================
-// OCR WORKER
-// ======================================================
+function extractWordsFromTesseractData(data) {
+  if (Array.isArray(data.words) && data.words.length > 0) {
+    return data.words;
+  }
+
+  const words = [];
+
+  if (Array.isArray(data.blocks)) {
+    for (const b of data.blocks) {
+      for (const p of b.paragraphs || []) {
+        for (const l of p.lines || []) {
+          for (const w of l.words || []) {
+            if (w && w.text && w.bbox) {
+              words.push({
+                text: w.text,
+                bbox: {
+                  x0: w.bbox.x0,
+                  y0: w.bbox.y0,
+                  x1: w.bbox.x1,
+                  y1: w.bbox.y1
+                },
+                confidence: typeof w.confidence === "number" ? w.confidence : 80
+              });
+            }
+          }
+        }
+      }
+    }
+  }
+
+  if (words.length === 0 && typeof data.tsv === "string") {
+    const lines = data.tsv.split("\n");
+    for (const line of lines) {
+      const cols = line.split("\t");
+      if (cols.length >= 12 && cols[0] === "5") {
+        const left = parseInt(cols[6], 10);
+        const top = parseInt(cols[7], 10);
+        const width = parseInt(cols[8], 10);
+        const height = parseInt(cols[9], 10);
+        const conf = parseFloat(cols[10]);
+        const text = cols[11] ? cols[11].trim() : "";
+
+        if (text && !isNaN(left) && !isNaN(top)) {
+          words.push({
+            text,
+            bbox: {
+              x0: left,
+              y0: top,
+              x1: left + width,
+              y1: top + height
+            },
+            confidence: isNaN(conf) ? 80 : conf
+          });
+        }
+      }
+    }
+  }
+
+  return words;
+}
 
 let workerPromise = null;
 
-
 async function getOcrWorker() {
-
   if (!workerPromise) {
-    workerPromise =
-      createWorker("eng");
+    workerPromise = createWorker("eng");
   }
-
   return workerPromise;
 }
 
-
 async function ocrImage(buffer) {
-
-  const worker =
-    await getOcrWorker();
-
-  const result =
-    await worker.recognize(buffer);
-
-  return result.data;
+  const worker = await getOcrWorker();
+  const result = await worker.recognize(buffer, {}, { blocks: true, tsv: true });
+  return {
+    ...result.data,
+    words: extractWordsFromTesseractData(result.data)
+  };
 }
 
 
@@ -1541,7 +1682,7 @@ async function processImage(
 
 
   const overlays =
-    createOverlays(
+    await createOverlays(
       ocrData,
       profileData,
       ocrMetaWidth,
@@ -1855,7 +1996,7 @@ async function processScannedPdf(
 
 
     const overlays =
-      createOverlays(
+      await createOverlays(
         ocrData,
         profileData,
         p.width,
@@ -2044,16 +2185,14 @@ const pdfAliases = {
 };
 
 
-function findPdfValue(
+async function findPdfValue(
   fieldName,
   profileData
 ) {
-
   const field =
     normalizePdfFieldName(
       fieldName
     );
-
 
   for (
     const [
@@ -2064,12 +2203,10 @@ function findPdfValue(
       pdfAliases
     )
   ) {
-
     if (
       aliases.includes(field) &&
       profileData[key]
     ) {
-
       return {
         key,
         value:
@@ -2080,7 +2217,6 @@ function findPdfValue(
     }
   }
 
-
   for (
     const [
       key,
@@ -2090,7 +2226,6 @@ function findPdfValue(
       pdfAliases
     )
   ) {
-
     if (
       aliases.some(
         alias =>
@@ -2100,7 +2235,6 @@ function findPdfValue(
       ) &&
       profileData[key]
     ) {
-
       return {
         key,
         value:
@@ -2111,6 +2245,35 @@ function findPdfValue(
     }
   }
 
+  if (openai && process.env.OPENAI_API_KEY) {
+    try {
+      const rawModel = process.env.OPENAI_MODEL || "gpt-4o-mini";
+      const model = rawModel.toLowerCase().includes("luna") ? "gpt-4o-mini" : rawModel;
+      const completion = await openai.chat.completions.create({
+        model,
+        messages: [
+          {
+            role: "system",
+            content: "You map a PDF form field name to citizen profile attributes. Return valid JSON: { \"profileKey\": \"key or null\" }"
+          },
+          {
+            role: "user",
+            content: `Field name: "${fieldName}"\nAvailable keys: ${Object.keys(profileData).join(", ")}`
+          }
+        ],
+        response_format: { type: "json_object" },
+        temperature: 0.1,
+        max_tokens: 100
+      });
+      const parsed = JSON.parse(completion.choices[0].message.content);
+      if (parsed.profileKey && profileData[parsed.profileKey]) {
+        return {
+          key: parsed.profileKey,
+          value: String(profileData[parsed.profileKey])
+        };
+      }
+    } catch (e) {}
+  }
 
   return null;
 }
@@ -2307,7 +2470,7 @@ app.post(
 
 
             const match =
-              findPdfValue(
+              await findPdfValue(
                 fieldName,
                 profileData
               );
@@ -2613,6 +2776,62 @@ app.post(
   }
 );
 
+
+// ======================================================
+// AI CHAT ASSISTANT
+// ======================================================
+
+app.post("/api/chat", async (req, res) => {
+  try {
+    const { language = "English", messages = [] } = req.body;
+
+    const userQuestion = messages.length ? messages[messages.length - 1].content : "";
+
+    if (!userQuestion) {
+      return res.status(400).json({ message: "Message is required." });
+    }
+
+    if (openai && process.env.OPENAI_API_KEY) {
+      try {
+        const rawModel = process.env.OPENAI_MODEL || "gpt-4o-mini";
+        const model = rawModel.toLowerCase().includes("luna") ? "gpt-4o-mini" : rawModel;
+
+        const systemPrompt = `You are Hamara Saathi, a helpful, polite, and knowledgeable AI assistant designed to guide Indian citizens regarding government welfare schemes, public documents (Aadhaar, PAN, Voter ID), application procedures, and citizen assistance.
+Respond warmly and accurately in ${language}. Keep answers concise, clear, and easy to understand for everyday citizens.`;
+
+        const chatMessages = [
+          { role: "system", content: systemPrompt },
+          ...messages.slice(-6)
+        ];
+
+        const completion = await openai.chat.completions.create({
+          model,
+          messages: chatMessages,
+          max_tokens: 500,
+          temperature: 0.3
+        });
+
+        const reply = completion.choices[0].message.content;
+        return res.status(200).json({ reply });
+      } catch (openAiErr) {
+        console.warn("OpenAI Chat fallback:", openAiErr.message);
+      }
+    }
+
+    const fallbackResponses = {
+      English: `Hello! I am your Hamara Saathi digital assistant. I can help you with government schemes, document verification (Aadhaar, PAN, Voter ID), auto-filling government forms, and tracking application statuses. How may I assist you today?`,
+      Hindi: `नमस्ते! मैं आपका हमारा साथी डिजिटल सहायक हूँ। मैं आपको सरकारी योजनाओं, दस्तावेज़ सत्यापन (आधार, पैन, वोटर आईडी), सरकारी फॉर्म स्वतः भरने और आवेदन की स्थिति ट्रैक करने में सहायता कर सकता हूँ। मैं आपकी क्या मदद कर सकता हूँ?`,
+      Marathi: `नमस्कार! मी तुमचा 'आमचा साथी' डिजिटल सहाय्यक आहे. मी तुम्हाला सरकारी योजना, कागदपत्र पडताळणी (आधार, पॅन, मतदार ओळखपत्र), अर्ज भरणे आणि अर्जांची स्थिती तपासण्यात मदत करू शकतो. मी तुमची काय मदत करू?`,
+      Telugu: `నమస్కారం! నేను మీ 'హమారా సాథీ' డిజిటల్ సహాయకుడిని. ప్రభుత్వ పథకాలు, పత్రాల ధృవీకరణ (ఆధార్, పాన్, ఓటర్ ఐడి), ఫారమ్ పూర్తి చేయడం మరియు దరఖాస్తు స్థితిని తనిఖీ చేయడంలో నేను మీకు సహాయపడగలను. మీకు ఎలా సహాయపడగలను?`
+    };
+
+    const reply = fallbackResponses[language] || fallbackResponses.English;
+    return res.status(200).json({ reply });
+  } catch (error) {
+    console.error("Chat error:", error);
+    res.status(500).json({ message: "Unable to process AI chat message." });
+  }
+});
 
 // ======================================================
 // START SERVER
