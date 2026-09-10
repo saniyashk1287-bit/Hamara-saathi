@@ -11,6 +11,7 @@ import FormFilling from "./pages/FormFilling";
 import Documents from "./pages/Documents";
 import TrackApplication from "./pages/TrackApplication";
 import Notifications from "./pages/Notifications";
+import { API_BASE_URL } from "./api/apiClient";
 
 function App() {
 
@@ -58,7 +59,7 @@ if (!user || !user.user_id) {
 try {
 
   const response = await fetch(
-    `http://localhost:5000/api/profile/${user.user_id}`
+    `${API_BASE_URL}/api/profile/${user.user_id}`
   );
 
   const data = await response.json();

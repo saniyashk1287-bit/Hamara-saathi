@@ -1333,7 +1333,7 @@ function calculatePlacement(
           Math.max(
             1,
             String(value).length *
-              0.52
+            0.52
           )
         )
       );
@@ -1382,6 +1382,15 @@ Return ONLY valid JSON matching this schema:
   ],
   "unmatchedFields": ["list of other detected form field names not available in citizen profile"]
 }`;
+
+    // backend/server.js mein jahan app.use(cors()) likha hai, use isse update karein:
+    const cors = require('cors');
+
+    app.use(cors({
+      origin: "*", // Testing ke liye all allow karein, ya apna live frontend URL daalein
+      credentials: true,
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+    }));
 
     const userPrompt = `Form text:\n${extractedText.slice(0, 3500)}\n\nCitizen profile data:\n${JSON.stringify(profileData, null, 2)}`;
 
@@ -1715,15 +1724,15 @@ async function processImage(
 
   const embedded =
     meta.format === "jpeg" ||
-    meta.format === "jpg"
+      meta.format === "jpg"
 
       ? await pdfDoc.embedJpg(
-          source
-        )
+        source
+      )
 
       : await pdfDoc.embedPng(
-          finalImage
-        );
+        finalImage
+      );
 
 
   page.drawImage(
@@ -1899,7 +1908,7 @@ async function drawOverlays(
       Math.max(
         8,
         overlay.fontSize *
-          scaleX
+        scaleX
       );
 
 
@@ -1907,7 +1916,7 @@ async function drawOverlays(
       Math.max(
         2,
         overlay.x *
-          scaleX
+        scaleX
       );
 
 
@@ -1915,11 +1924,11 @@ async function drawOverlays(
       Math.max(
         2,
         pdfHeight -
-          (
-            overlay.yTop *
-            scaleY
-          ) -
-          size
+        (
+          overlay.yTop *
+          scaleY
+        ) -
+        size
       );
 
 
@@ -1946,8 +1955,8 @@ async function drawOverlays(
           Math.max(
             20,
             pdfWidth -
-              x -
-              5
+            x -
+            5
           )
       }
     );
@@ -2268,7 +2277,7 @@ async function findPdfValue(
           value: String(profileData[parsed.profileKey])
         };
       }
-    } catch (e) {}
+    } catch (e) { }
   }
 
   return null;
@@ -2437,7 +2446,7 @@ app.post(
         try {
           form =
             pdfDoc.getForm();
-        } catch (e) {}
+        } catch (e) { }
 
 
         const fields =
@@ -2540,12 +2549,12 @@ app.post(
 
           try {
             form.updateFieldAppearances();
-          } catch (e) {}
+          } catch (e) { }
 
 
           try {
             form.flatten();
-          } catch (e) {}
+          } catch (e) { }
 
 
           const outputName =
@@ -2766,7 +2775,7 @@ app.post(
           fs.unlinkSync(
             temporaryPath
           );
-        } catch (e) {}
+        } catch (e) { }
       }
     }
   }

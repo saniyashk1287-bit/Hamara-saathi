@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Dashboard.css";
-
 import logo from "../assets/hamara-saathi-logo.png";
+import { API_BASE_URL } from "../api/apiClient";
 
 function Dashboard({
   language = "English",
@@ -445,7 +445,7 @@ function Dashboard({
     try {
 
       const response = await fetch(
-        "http://localhost:5000/api/chat",
+        `${API_BASE_URL}/api/chat`,
         {
           method: "POST",
 

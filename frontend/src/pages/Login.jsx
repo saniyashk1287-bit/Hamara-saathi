@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./Login.css";
 import logo from "../assets/hamara-saathi-logo.png";
+import { API_BASE_URL } from "../api/apiClient";
 
 function Login({ onLogin, onRegister }) {
 
@@ -46,7 +47,7 @@ function Login({ onLogin, onRegister }) {
       // =========================
 
       const response = await fetch(
-        "http://localhost:5000/api/login",
+        `${API_BASE_URL}/api/login`,
         {
           method: "POST",
 

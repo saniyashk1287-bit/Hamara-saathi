@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import "./Documents.css";
+import { API_BASE_URL, getMediaUrl } from "../api/apiClient";
 
 
 function Documents({
@@ -118,7 +119,7 @@ function Documents({
       const response =
         await fetch(
 
-          `http://localhost:5000/api/documents/${user.user_id}`
+          `${API_BASE_URL}/api/documents/${user.user_id}`
 
         );
 
@@ -260,7 +261,7 @@ function Documents({
       const response =
         await fetch(
 
-          "http://localhost:5000/api/documents/upload",
+          `${API_BASE_URL}/api/documents/upload`,
 
           {
 
@@ -366,7 +367,7 @@ function Documents({
       const response =
         await fetch(
 
-          `http://localhost:5000/api/documents/${user.user_id}/${id}`,
+          `${API_BASE_URL}/api/documents/${user.user_id}/${id}`,
 
           {
 
@@ -626,7 +627,7 @@ function Documents({
               ) {
 
                 imageSource =
-                  `http://localhost:5000${document.savedPath}`;
+                  getMediaUrl(document.savedPath);
 
               }
 

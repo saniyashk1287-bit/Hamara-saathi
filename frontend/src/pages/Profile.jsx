@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 import "./Profile.css";
+import { API_BASE_URL } from "../api/apiClient";
 
 
 function Profile({
@@ -530,7 +531,7 @@ function Profile({
       const response =
         await fetch(
 
-          "http://localhost:5000/api/profile",
+          `${API_BASE_URL}/api/profile`,
 
           {
 

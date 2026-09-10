@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import "./FormFilling.css";
+import { API_BASE_URL } from "../api/apiClient";
 
 
 function FormFilling({
@@ -819,7 +820,7 @@ function FormFilling({
       const response =
         await fetch(
 
-          "http://localhost:5000/api/form-filling/upload",
+          `${API_BASE_URL}/api/form-filling/upload`,
 
           {
 
